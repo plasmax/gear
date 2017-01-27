@@ -30,22 +30,21 @@ class nuke_browserwidget(QtGui.QDialog):
         item = self.model.filePath(index_sel)
         print item
 
-# mini_browser = nuke_browserwidget('B:/')
-# mini_browser.show()
-
-def make_panel():
+def make_panel(directory_path):
     global mini_browser
-    mini_browser = nuke_browserwidget('B:/')
+    mini_browser = nuke_browserwidget(directory_path)
     mini_browser.show()
     mini_browser.resize(480,320)
-
+    
+directory_path = 'B:/' # replace with any path
+    
 if __name__ == '__main__':
     if not QtGui.QApplication.instance():
         app = QtGui.QApplication(sys.argv)
         make_panel()
         sys.exit(app.exec_())
     else:
-        make_panel()
+        make_panel(directory_path)
 
 
 
