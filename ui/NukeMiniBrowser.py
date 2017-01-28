@@ -41,7 +41,7 @@ directory_path = 'B:/' # replace with any path
 if __name__ == '__main__':
     if not QtGui.QApplication.instance():
         app = QtGui.QApplication(sys.argv)
-        make_panel()
+        make_panel(directory_path)
         sys.exit(app.exec_())
     else:
         make_panel(directory_path)
