@@ -1,0 +1,40 @@
+Group {
+ name Fibonacci_Glow
+ knobChanged "\ndef getnacci(n):\n    fibo = \[0,1]\n    for x in range(n):\n        fibo.append(fibo\[-1]+fibo\[-2])\n    return fibo\nif nuke.thisKnob().name() == 'iter':\n    with nuke.thisNode():\n        \[nuke.delete(n) for n in nuke.allNodes()]\n        inp = nuke.nodes.Input()\n        iters = int(nuke.thisKnob().value())\n        fibo_iters = getnacci(iters)\n        fibo_blurs = \[nuke.nodes.Blur(inputs=\[nuke.toNode('Input1')], size=f) for f in fibo_iters]\n        fibo_blurs.insert(2,None)\n        print fibo_blurs\n        mrg = nuke.nodes.Merge2(inputs=fibo_blurs,operation='plus')\n        outp = nuke.nodes.Output(inputs=\[mrg])\n"
+ updateUI "\nnuke.thisNode().knob('iter').setFlag(0x00000002)\n"
+ tile_color 0xe06e45ff
+ selected true
+ xpos -108
+ ypos -285
+ addUserKnob {20 User}
+ addUserKnob {78 iter l "Glow Iterations" R 1 20 n 1}
+ iter 1
+}
+ Input {
+  inputs 0
+  name Input1
+ }
+set N1d032800 [stack 0]
+ Blur {
+  size 1
+  name Blur3
+ }
+push 0
+push $N1d032800
+ Blur {
+  size 1
+  name Blur2
+ }
+push $N1d032800
+ Blur {
+  name Blur1
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge1
+ }
+ Output {
+  name Output1
+ }
+end_group
