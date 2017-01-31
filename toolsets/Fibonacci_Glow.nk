@@ -1,12 +1,21 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
 Group {
  name Fibonacci_Glow
- knobChanged "\ndef getnacci(n):\n    fibo = \[0,1]\n    for x in range(n):\n        fibo.append(fibo\[-1]+fibo\[-2])\n    return fibo\nif nuke.thisKnob().name() == 'iter':\n    with nuke.thisNode():\n        \[nuke.delete(n) for n in nuke.allNodes()]\n        inp = nuke.nodes.Input()\n        iters = int(nuke.thisKnob().value())\n        fibo_iters = getnacci(iters)\n        fibo_blurs = \[nuke.nodes.Blur(inputs=\[nuke.toNode('Input1')], size=f) for f in fibo_iters]\n        fibo_blurs.insert(2,None)\n        print fibo_blurs\n        mrg = nuke.nodes.Merge2(inputs=fibo_blurs,operation='plus')\n        outp = nuke.nodes.Output(inputs=\[mrg])\n"
+ knobChanged "\ndef rebuild_fibo():\n    with nuke.thisNode():\n        \[nuke.delete(n) for n in nuke.allNodes()]\n        csin = nuke.thisNode().knob('colorspace_in').value()\n        csout = nuke.thisNode().knob('colorspace_out').value()\n        inp = nuke.nodes.Input()\n        csi = nuke.nodes.Colorspace(inputs=\[inp], colorspace_in=csin, colorspace_out=csout)\n        iters = int(nuke.thisNode().knob('iter').value())\n        fibo_iters = getnacci(iters)\[2:]\n        fibo_blurs = \[nuke.nodes.Blur(inputs=\[csi], size=f) for f in fibo_iters]\n        fibo_blurs.insert(0,None)\n        print fibo_blurs\n        fibo_blurs.insert(2,None)\n        mrg = nuke.nodes.Merge2(inputs=fibo_blurs,operation='plus')\n        cso = nuke.nodes.Colorspace(inputs=\[mrg], colorspace_in=csout, colorspace_out=csin)\n        outp = nuke.nodes.Output(inputs=\[cso])\n        if nuke.thisNode().knob('effectonly').value():\n            mrg.setInput(0,None)\n        else:\n            mrg.setInput(0,csi)\n\ndef getnacci(n):\n    fibo = \[0,1]\n    for x in range(n):\n        fibo.append(fibo\[-1]+fibo\[-2])\n    return fibo\n\nif (nuke.thisKnob().name() in \['iter','effectonly','colorspace_in','colorspace_out']):\n    rebuild_fibo()\n"
  updateUI "\nnuke.thisNode().knob('iter').setFlag(0x00000002)\n"
  tile_color 0xe06e45ff
  selected true
- xpos -108
- ypos -285
+ xpos 4865
+ ypos -24864
  addUserKnob {20 User}
+ addUserKnob {6 effectonly l "Effect Only" +STARTLINE}
+ effectonly true
+ addUserKnob {4 colorspace_in l "Colorspace In" M {"1.80\tgamma 1.80" "2.20\tgamma 2.20" "2.40\tgamma 2.40" "rec709\trec709 (~1.95)" "sRGB\tsRGB (~2.20)" Cineon "RGB\tLinear" HSV HSL YPbPr YCbCr CIE-XYZ CIE-Yxy "CIE-Lab\tL*a*b*" CIE-LCH Panalog REDLog ViperLog AlexaV3LogC PLogLin SLog SLog1 SLog2 SLog3 CLog Protune ""}}
+ colorspace_in RGB
+ addUserKnob {4 colorspace_out l "Colorspace Out" M {"1.80\tgamma 1.80" "2.20\tgamma 2.20" "2.40\tgamma 2.40" "rec709\trec709 (~1.95)" "sRGB\tsRGB (~2.20)" Cineon "RGB\tLinear" HSV HSL YPbPr YCbCr CIE-XYZ CIE-Yxy "CIE-Lab\tL*a*b*" CIE-LCH Panalog REDLog ViperLog AlexaV3LogC PLogLin SLog SLog1 SLog2 SLog3 CLog Protune ""}}
+ colorspace_out RGB
  addUserKnob {78 iter l "Glow Iterations" R 1 20 n 1}
  iter 1
 }
@@ -14,25 +23,21 @@ Group {
   inputs 0
   name Input1
  }
-set N1d032800 [stack 0]
+ Colorspace {
+  name Colorspace1
+ }
  Blur {
   size 1
-  name Blur3
- }
-push 0
-push $N1d032800
- Blur {
-  size 1
-  name Blur2
- }
-push $N1d032800
- Blur {
   name Blur1
  }
+push 0
  Merge2 {
-  inputs 3+1
+  inputs 2
   operation plus
   name Merge1
+ }
+ Colorspace {
+  name Colorspace2
  }
  Output {
   name Output1
