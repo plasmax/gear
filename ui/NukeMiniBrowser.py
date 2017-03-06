@@ -1,3 +1,5 @@
+__all__ = ['nuke_browserwidget','make_panel']
+
 import sys
 from PySide import QtGui, QtCore
 

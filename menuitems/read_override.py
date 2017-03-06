@@ -1,3 +1,5 @@
+__all__ = ['read_from']
+
 import os
 import re
 import operator
@@ -40,7 +42,6 @@ def file_sequence(node):
         directory_list = os.listdir(directory_name)
         file_name = os.path.basename(file_value)
         file_name = os.path.splitext(file_name)[0]
-        file_extension = os.path.splitext(file_name)[1] # Unnecessary
         file_name = file_name.split('%')
         print file_name[0]
         print ( r'\.' + file_value.split('.')[1])
@@ -50,10 +51,6 @@ def file_sequence(node):
                                 )
 
         regx = re.compile(pattern)
-        #sq = [re.search(regx,m).groups() for m in directory_list if re.search(regx,m)]
-        #frames = [ int(num) for first, num, last in sq[:]]
-        #print frames
-        #print sq
         sq = []
         for f in directory_list:
             if re.search(regx,f):
@@ -61,16 +58,7 @@ def file_sequence(node):
                 print search
                 first, num, mid, last = search
                 sq.append((first, num, last))
-                # sq.append((first, int(num), last))
         sq.sort(key=operator.itemgetter(1))
-        print sq
-        # if ('%' in file_value):
-            # padding = file_name.split('%')[1]
-            # padding = int(re.search('\d+',padding).group(0))
-            # file_name = file_name.split('%')[0]
-        # elif ('#' in file_value):
-            # padding = len([x for x in file_name if x == r'#'])
-            # file_name = file_name.split('#')[0]
     
     else:
         return None

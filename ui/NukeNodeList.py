@@ -1,10 +1,11 @@
+__all__ = ['parse_nkScript', 'CustomModel', 'DragDropView', 'DragDropPanel']
+
 import re
 import sys
 from PySide.QtCore import * 
 from PySide.QtGui import * 
 
 filename = r"D:\allNodes.nk"
-# filename = raw_input("Path to .nk file: ")
 print filename
 
 def parse_nkScript(filename):
@@ -42,7 +43,6 @@ class CustomModel(QStandardItemModel):
         node_data = i.data(Qt.UserRole)
         print i.data(), node_data
         md.setText(node_data)
-        #+':'+self.itemFromIndex(i).parent().text()) #just the name + parent to use in the drop to filter out acceptable drops
         return md
 
     def mimeTypes(self):

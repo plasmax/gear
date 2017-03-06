@@ -1,3 +1,5 @@
+__all__ = ['parse_nkScript']
+
 import re
 
 # regex = re.compile(r'(\w+)( {\n[^}]+name )([a-zA-Z0-9_:/.]+)([^}]+)')
