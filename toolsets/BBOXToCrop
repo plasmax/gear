@@ -1,0 +1,24 @@
+set cut_paste_input [stack 0]
+version 10.0 v1
+push $cut_paste_input
+Group {
+ name BBOXToCrop
+ tile_color 0x583276ff
+ selected true
+ xpos 85
+ ypos 280
+ addUserKnob {20 User}
+ addUserKnob {22 Go t "Push this button to create a Crop node with bounding box values for your chosen frame range baked into animation." T "import time\nBBOXValues = \[]\ndef copyAnimToBBOXCrop(node):\n    global BBOXValues\n    #time.sleep(0.1)\n    tn = nuke.thisNode()\n    tn.forceValidate()\n    bbox_values = tn\['ROI'].value()\n    print bbox_values\n    print type(bbox_values)\n    x, y, r, t = bbox_values\n    BBOXValues.append(bbox_values)\n\n    node\['box'].setX(x)\n    node\['box'].setY(y)\n    node\['box'].setR(r)\n    node\['box'].setT(t)\n\nrc = nuke.nodes.Remove(inputs=\[nuke.toNode('Input1')])\nct = nuke.nodes.CurveTool(inputs=\[rc])\nct\['operation'].setValue('Auto Crop')\nct\['ROI'].setExpression('bbox.x', 0)\nct\['ROI'].setExpression('bbox.y', 1)\nct\['ROI'].setExpression('bbox.r', 2)\nct\['ROI'].setExpression('bbox.t', 3)\nct\['afterFrameRender'].setValue('copyAnimToBBOXCrop(cn)')\n\n# global cn ?\ncn = nuke.nodes.Crop(inputs=\[ct],name='BBOXCopy')\ncn\['box'].setKeyAt(nuke.frame())\n\non = nuke.toNode('Output1')\non.setInput(0, cn)\n\np = nuke.Panel('Frames to Analyse')\np.addSingleLineInput('first','0')\np.addSingleLineInput('last','100')\np.show()\n\nfirst = int(p.value('first'))\nlast = int(p.value('last'))\n\ntime.sleep(0.5)\n\nnuke.execute(ct, first, last)\ntn = nuke.thisNode()\n#tn\['label'].setValue(str(BBOXValues))\n\nnuke.delete(rc)\nnuke.delete(ct)\nnuke.delete(cn)\n\nwith nuke.root():\n    ncn = nuke.nodes.Crop(inputs=\[tn], name='BBOXCopy')\n    ncn\['box'].setKeyAt(nuke.frame())\n    for x,y,r,t in BBOXValues:\n        ncn\['box'].setValueAt(x, first, 0)         \n        ncn\['box'].setValueAt(y, first, 1)\n        ncn\['box'].setValueAt(r, first, 2)\n        ncn\['box'].setValueAt(t, first, 3)\n        first += 1" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Input1
+  selected true
+  xpos 0
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group
