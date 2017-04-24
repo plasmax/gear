@@ -1,4 +1,4 @@
-__all__ = ['NukeTestWindow']
+__all__ = ['NukeTestWindow','load_nuke_test_window']
 
 import nuke
 import PySide.QtCore as QtCore
@@ -25,5 +25,8 @@ class NukeTestWindow(QtGui.QWidget):
         self.myTable.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding))
         self.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding))
 
-pane = nuke.getPaneFor('DAG.1')
-panels.registerWidgetAsPanel('scripts.NukeTestWindow', 'Test table panel', 'uk.co.thefoundry.NukeTestWindow', True).addToPane(pane)
+nuke_tw = panels.registerWidgetAsPanel('scripts.NukeTestWindow', 'Test table panel', 'uk.co.max.NukeTestWindow', True)
+
+def load_nuke_test_window():
+    pane = nuke.getPaneFor('DAG.1')
+    nuke_tw.addToPane(pane)

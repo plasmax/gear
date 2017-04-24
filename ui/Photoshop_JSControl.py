@@ -1,14 +1,12 @@
 __all__ = ['PhotoshopControl','load_psctrl']
 
 import sys
-print sys.version
-sys.path.append('C:\Program Files\Nuke10.5v1\pythonextensions\site-packages')
+import os
 
 from PySide.QtGui import *
 from PySide.QtCore import *
 import _winreg
 import subprocess
-import os
 import time
 
 class PhotoshopControl(QWidget):
@@ -149,12 +147,26 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 else:
     import nuke
-    import nukescripts  
+    import nukescripts
     def load_psctrl():
         nukescripts.panels.__panels['uk.co.max.PhotoshopJSIDE']()
 
     outliner_panel = nukescripts.panels.registerWidgetAsPanel('scripts.Photoshop_JSControl.PhotoshopControl', 'Photoshop JS IDE', 'uk.co.max.PhotoshopJSIDE', True )
     nuke.menu('Nodes').addCommand('Scripts/Photoshop JS IDE', 'scripts.load_psctrl()','shift+j')
+    
+    # def setup_JSControl():
+    #     from scripts.Photoshop_JSControl import PhotoshopControl
+    #     from scripts.Photoshop_JSControl import load_psctrl
+
+    #     global PhotoshopControl
+    #     global load_psctrl
+    #     outliner_panel = nukescripts.panels.registerWidgetAsPanel('PhotoshopControl', 'Photoshop JS IDE', 'uk.co.max.PhotoshopJSIDE', True )
+
+    #     node_toolbar = nuke.menu('Nodes')
+    #     node_toolbar.addCommand('Scripts/Photoshop JS IDE', 'load_psctrl()','shift+j')
+    #     return PhotoshopControl
+
+    # setup_JSControl()
 
 
 
