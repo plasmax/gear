@@ -17,4 +17,4 @@ def load_stack(load_stack_js = r'C:\ps_js\load_stack.jsx', js_file = r'c:\ps_js\
     target = r'"{0}" "{1}"'.format(psApp, js_file)
     subprocess.Popen(target)
 
-nuke.menu('Nodes').addCommand('Scripts/Load Photoshop Stack','scripts.load_stack()','shift+l')
+nuke.menu('Nodes').addCommand('Scripts/Load Photoshop Stack','gear.load_stack()','shift+l')

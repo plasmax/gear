@@ -15,4 +15,4 @@ def createDir():
     if not os.path.isdir(dn):
         os.makedirs(dn)
 
-# nuke.addBeforeRender(scripts.createDir)
+# nuke.addBeforeRender(gear.createDir)

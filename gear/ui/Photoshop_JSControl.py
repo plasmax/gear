@@ -1,14 +1,12 @@
 __all__ = ['PhotoshopControl','load_psctrl']
 
 import sys
-print sys.version
-sys.path.append('C:\Program Files\Nuke10.5v1\pythonextensions\site-packages')
+import os
 
 from PySide.QtGui import *
 from PySide.QtCore import *
 import _winreg
 import subprocess
-import os
 import time
 
 class PhotoshopControl(QWidget):
@@ -24,7 +22,7 @@ class PhotoshopControl(QWidget):
         # self.script_document_page()
         self.btn_new_tab = QPushButton('New Tab')
         self._btnbar.addWidget(self.btn_new_tab)
-        self.new_script_path = QLineEdit('D:\ps_js\include.jsx')
+        self.new_script_path = QLineEdit('C:\ps_js\include.jsx')
         self._btnbar.addWidget(self.new_script_path)
         self.tabWidget = QTabWidget()
         self._layout.addWidget(self.tabWidget)
@@ -51,7 +49,7 @@ class ScriptPage(QWidget):
         self.btn_loadjs = QPushButton('Load')
         self.btn_savejs = QPushButton('Save')
         self.ret_path = QLineEdit('c:\\temp\\ps_temp_ret.txt')
-        self.ps_path = QLineEdit('C:\Program Files\Adobe\Adobe Photoshop CC 2015\Photoshop.exe')
+        self.ps_path = QLineEdit('C:\Program Files\Adobe\Adobe Photoshop CC 2017\Photoshop.exe')
         self.js_content = QPlainTextEdit()
         self.btn_shelf = QDialogButtonBox()
         self.btn_loadps = QPushButton('Load Photoshop')
@@ -149,12 +147,26 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 else:
     import nuke
-    import nukescripts  
+    import nukescripts
     def load_psctrl():
         nukescripts.panels.__panels['uk.co.max.PhotoshopJSIDE']()
 
-    outliner_panel = nukescripts.panels.registerWidgetAsPanel('scripts.Photoshop_JSControl.PhotoshopControl', 'Photoshop JS IDE', 'uk.co.max.PhotoshopJSIDE', True )
-    nuke.menu('Nodes').addCommand('Scripts/Photoshop JS IDE', 'scripts.load_psctrl()','shift+j')
+    outliner_panel = nukescripts.panels.registerWidgetAsPanel('gear.Photoshop_JSControl.PhotoshopControl', 'Photoshop JS IDE', 'uk.co.max.PhotoshopJSIDE', True )
+    nuke.menu('Nodes').addCommand('Scripts/Photoshop JS IDE', 'gear.load_psctrl()','shift+j')
+    
+    # def setup_JSControl():
+    #     from gear.Photoshop_JSControl import PhotoshopControl
+    #     from gear.Photoshop_JSControl import load_psctrl
+
+    #     global PhotoshopControl
+    #     global load_psctrl
+    #     outliner_panel = nukescripts.panels.registerWidgetAsPanel('PhotoshopControl', 'Photoshop JS IDE', 'uk.co.max.PhotoshopJSIDE', True )
+
+    #     node_toolbar = nuke.menu('Nodes')
+    #     node_toolbar.addCommand('Scripts/Photoshop JS IDE', 'load_psctrl()','shift+j')
+    #     return PhotoshopControl
+
+    # setup_JSControl()
 
 
 

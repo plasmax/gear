@@ -53,9 +53,9 @@ import nukescripts
 def load_browserwidget():
     nukescripts.panels.__panels['uk.co.max.nuke_browserwidget']()
 
-outliner_panel = nukescripts.panels.registerWidgetAsPanel('scripts.nuke_browserwidget', 'Nuke Mini Browser', 'uk.co.max.nuke_browserwidget', True )
-nuke.menu('Nodes').addCommand('Scripts/Nuke Mini Browser', 'scripts.load_browserwidget()','shift+b')
-nuke.menu('Nodes').addCommand('Scripts/Nuke Mini Browser Panel', 'scripts.make_minibrowser()','shift+alt+b')
+outliner_panel = nukescripts.panels.registerWidgetAsPanel('gear.nuke_browserwidget', 'Nuke Mini Browser', 'uk.co.max.nuke_browserwidget', True )
+nuke.menu('Nodes').addCommand('Scripts/Nuke Mini Browser', 'gear.load_browserwidget()','shift+b')
+nuke.menu('Nodes').addCommand('Scripts/Nuke Mini Browser Panel', 'gear.make_minibrowser()','shift+alt+b')
 
 
 

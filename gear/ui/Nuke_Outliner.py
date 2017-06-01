@@ -44,8 +44,8 @@ class DragDropView(QTreeView):
 class Outliner(QWidget):
     """
     Maya's Outliner for Nuke
-    How to import: from scripts.ui.Nuke_Outliner import *
-    How to reload: reload(scripts.ui.Nuke_Outliner)
+    How to import: from gear.ui.Nuke_Outliner import *
+    How to reload: reload(gear.ui.Nuke_Outliner)
     pane = nuke.getPaneFor('DAG.1')
     nukescripts.panels.registerWidgetAsPanel('Outliner', 'Nuke10 Outliner', 'uk.co.max.NukeOutliner', True ).addToPane(pane)
     # Select item == select 'object' (node or geo)
@@ -88,8 +88,8 @@ class Outliner(QWidget):
     def updateValue(self):
         pass
 
-outliner_panel = nukescripts.panels.registerWidgetAsPanel('scripts.Outliner', 'Nuke10 Outliner', 'uk.co.max.NukeOutliner', True )
-nuke.menu('Nodes').addCommand('Scripts/Outliner', 'scripts.load_outliner()','shift+o')
+outliner_panel = nukescripts.panels.registerWidgetAsPanel('gear.Outliner', 'Nuke10 Outliner', 'uk.co.max.NukeOutliner', True )
+nuke.menu('Nodes').addCommand('Scripts/Outliner', 'gear.load_outliner()','shift+o')
 
 def load_outliner():
     nukescripts.panels.__panels['uk.co.max.NukeOutliner']()

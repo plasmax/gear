@@ -25,7 +25,7 @@ class NukeTestWindow(QtGui.QWidget):
         self.myTable.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding))
         self.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding))
 
-nuke_tw = panels.registerWidgetAsPanel('scripts.NukeTestWindow', 'Test table panel', 'uk.co.max.NukeTestWindow', True)
+nuke_tw = panels.registerWidgetAsPanel('gear.NukeTestWindow', 'Test table panel', 'uk.co.max.NukeTestWindow', True)
 
 def load_nuke_test_window():
     pane = nuke.getPaneFor('DAG.1')
