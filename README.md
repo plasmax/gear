@@ -8,4 +8,5 @@ for example)
 2) Add the following to your /.nuke/menu.py:
 
 import gear
+
 gear.menu_setup()
