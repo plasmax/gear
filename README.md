@@ -1,9 +1,10 @@
 # Python Scripts for software NUKE
 
-To load, place the module in a folder called "gear" in your nuke path (.nuke folder, for example)
+#### To install:
 
-#### Add the following line to your init.py:
+1) Place the folder "gear" somewhere in your 
+nuke plugin path directories (.nuke folder, 
+for example)
+2) Add the following to your /.nuke/menu.py:
 import gear
-
-#### And the following to your menu.py:
 gear.menu_setup()
